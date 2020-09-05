@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Servlet2
@@ -29,13 +30,16 @@ public class Servlet2 extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		Cookie ck[] = request.getCookies();
-		
-		for (int i = 0; i < ck.length; i++) {
-			
-			//print name and values of cookie data
-			out.print("<br> "+ck[i].getName() +"  "+ck[i].getValue());
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			String userName = (String) session.getAttribute("username");
+			String userId = (String) session.getAttribute("userid");
+			out.print("Hello User : "+userName +" With User Id :"+userId);
+		}else {
+			out.println("No Session Created ");
 		}
+		
+		
 		out.close();
 	}
 

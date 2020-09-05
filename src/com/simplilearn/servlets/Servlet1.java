@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Servlet1
@@ -35,17 +36,12 @@ public class Servlet1 extends HttpServlet {
 		
 		out.print("Welcome User :- " + userName);
 		
-		// create a cookie
-		Cookie ck1 = new Cookie("userId", userId);
-		Cookie ck2 = new Cookie("userName", userName);
+		// create a http Session
+		HttpSession session =  request.getSession(true);
+		session.setAttribute("username", userName);
+		session.setAttribute("userid", userId);		
 		
-		response.addCookie(ck1);
-		response.addCookie(ck2);
-		
-		// create a form for next request
-		out.print("<form method='GET' action='servlet2' >");
-		out.print("<input type='submit' value='Next Request'>");
-		out.print("</form>");
+		out.print("<a href='servlet2'> Next Request</a>");
 		out.close();
 	}
 
